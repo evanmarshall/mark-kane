@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Mark Kane</title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <style>
+            body {
+                color: #362664;
+            }
+
+            .effect6 {
+                position:relative;
+                box-shadow:0 1px 4px rgba(0, 0, 0, 0.23), 0 0 40px rgba(0, 0, 0, 0.05) inset;
+            }
+            .effect6:before, .effect6:after {
+                content:"";
+                position:absolute; 
+                z-index:-1;
+                box-shadow:0 0 20px rgba(0,0,0,0.23);
+                top:0;
+                bottom:0;
+                left:10px;
+                right:10px;
+                border-radius:100px / 10px;
+            } 
+            .effect6:after {
+                right:10px; 
+                left:auto; 
+                transform:skew(8deg) rotate(3deg);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root" style="display: none;">
+            <div class="container-fluid">
+                <div class="row" style="height: 25px;"></div>
+                <div class="row">
+                    <div class="col-sm-4 offset-sm-4 col-10 offset-1 effect6" style="text-align: center; background-color: #FFE9BC;">
+                        <div class="row" style="text-align: center; font-family: Garamond; font-size: 32px; padding-top: 15px; background-color: #FFE9BC;">
+                            <span id="header" style="width:100%;">
+                            </span>
+                        </div>
+                        <div class="row" style="text-align: center; font-family: &quot;Great Vibes&quot;, cursive; font-size: 42px; background-color: #FFE9BC;">
+                            <span id="name" style="width:100%;">
+                            </span>
+                        </div>
+                        <div class="row" style="text-align: center; font-family: Garamond; font-size: 20px; background-color: #FFE9BC;">
+                            <span id="date" style="width:100%;">
+                            </span>
+                        </div>
+                        <div class="row" style="text-align: center; white-space: pre-line; font-family: Bookman; padding-bottom: 25px; background-color: #FFE9BC;">
+                            <span id="prayer" style="width:100%;">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 25px; margin-bottom: 25px;">
+                    <div id="obituary" class="col-sm-4 offset-sm-4 col-10 offset-1 effect6" style="text-align: center; white-space: pre-line; font-family: Bookman; padding-bottom: 25px; padding-top: 25px; background-color: #FFE9BC;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.min.js"></script>
+        <script type="text/javascript">
+            if (typeof web3 != 'undefined'){
+                console.log("Using web3 detected from external source like Metamask")
+                this.web3 = new Web3(web3.currentProvider)
+            } else {
+                this.web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/'))
+            }
+
+            var markMemorialAbi = [
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "getDates",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "getHeader",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "getName",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "getObituary",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "getPrayer",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                }
+            ];
+
+            var contractAddress = '0x119391f7d7462913065ee3cfec6cff36cf283315';
+            var contract = window.web3.eth.contract(markMemorialAbi)
+                .at(contractAddress);
+            $('#header').text(contract.getHeader());
+            $('#name').text(contract.getName());
+            $('#date').text(contract.getDates());
+            $('#prayer').text(contract.getPrayer());
+            $('#obituary').text(contract.getObituary());
+            $('#root').show();
+        </script>
+    </body>
+</html>
