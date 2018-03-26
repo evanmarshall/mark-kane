@@ -69,7 +69,7 @@
         </div>
         <script type="text/javascript" src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.min.js"></script>
         <script type="text/javascript">
-            window.web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/'))
+            window.web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v0CPcJYXWvf7LGJxoNUa'))
 
             var markMemorialAbi = [
                 {
@@ -144,7 +144,7 @@
                 }
             ];
 
-            var contractAddress = '0x119391f7d7462913065ee3cfec6cff36cf283315';
+            var contractAddress = '0x5fa828e9eda730013fa49df9dab8261678833c0e';
             var contract = window.web3.eth.contract(markMemorialAbi)
                 .at(contractAddress);
             $('#header').text(contract.getHeader());
